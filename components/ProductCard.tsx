@@ -30,6 +30,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.name}
           </CardTitle>
           <CardContent className="p-4 flex-grow flex flex-col justify-between">
+          {product.description && (
+            <p className="text-gray-600 text-sm mb-2">{product.description}</p>
+          )}
             {price && price.unit_amount && (
               <p className="text-lg font-semibold text-gray-900">
                 ${(price.unit_amount / 100).toFixed(2)}
