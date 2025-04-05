@@ -1,7 +1,30 @@
+"use client";
+import { useCartStore } from "@/store/CartStore";
+import {
+  ShoppingCartIcon,
+  Bars3Icon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { items } = useCartStore();
+  const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <nav className="sticky top-0 z-50 bg-white shadow">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
@@ -15,7 +38,40 @@ const Navbar = () => {
             Checkout
           </Link>
         </div>
-        <div className="flex items-center space-x-4"></div>
+        <div className="flex items-center space-x-4">
+          <Link href="/checkout">
+            <ShoppingCartIcon />
+            {cartCount > 0 && <span>{cartCount}</span>}
+          </Link>
+          <Button
+            variant="ghost"
+            className="md:hidden"
+            onClick={() => setIsMobileOpen((prevState) => !prevState)}
+          >
+            {isMobileOpen ? <XMarkIcon /> : <Bars3Icon />}
+          </Button>
+        </div>
+        {isMobileOpen && (
+          <nav className="md:hidden bg-white shadow-md">
+            <ul className="flex flex-col p-4 space-y-2">
+              <li>
+                <Link href="/" className="block hover:text-blue-600">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/products" className="block hover:text-blue-600">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/checkout" className="block hover:text-blue-600">
+                  Checkout
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        )}
       </div>
     </nav>
   );
