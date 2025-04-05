@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Stripe from "stripe";
 import ProductCard from "./ProductCard";
 
@@ -7,6 +8,18 @@ interface ProductListProps {
 }
 
 const ProductList = ({ products }: ProductListProps) => {
+  const [userInput, setuserInput] = useState("");
+  const filteredProducts = products.filter((product) => {
+    const productMatch = product.name
+      .toLocaleLowerCase()
+      .includes(userInput.toLocaleLowerCase());
+    const descriptionMatch = product.description
+      ? product.description
+          .toLocaleLowerCase()
+          .includes(userInput.toLocaleLowerCase())
+      : false;
+    return productMatch || descriptionMatch;
+  });
   return (
     <div>
       <div className="mb-6 flex justify-center">
@@ -17,7 +30,7 @@ const ProductList = ({ products }: ProductListProps) => {
         />
       </div>
       <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map((product, key) => (
+        {filteredProducts.map((product, key) => (
           <li key={key}>
             <ProductCard product={product} />
           </li>
