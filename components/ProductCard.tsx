@@ -12,8 +12,8 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const price = product.default_price as Stripe.Price;
   return (
-    <Link href={"/procuts/1"}>
-      <Card>
+    <Link href={`/procuts/${product.id}`} className="block h-full">
+      <Card className="group hover:shadow-2xl transition duration-300 py-0 h-full flex flex-col border-gray-300 gap-0">
         {product.images && product.images[0] && (
           <div className="relative h-80 w-full">
             <Image
@@ -21,15 +21,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
               alt={product.name}
               layout="fill"
               objectFit="cover"
-              className="transition-opacity duration-500 ease-in-out"
+              className="group-hover:opacity-90 transition-opacity duration-300 rounded-t-lg"
             />
           </div>
         )}
-        <CardHeader>
-          <CardTitle>{product.name}</CardTitle>
-          <CardContent>
+        <CardHeader className="p-4">
+          <CardTitle className="text-xl font-bold text-gray-800">
+            {product.name}
+          </CardTitle>
+          <CardContent className="p-4 flex-grow flex flex-col justify-between">
             {price && price.unit_amount && (
-              <p className="text-lg">${(price.unit_amount / 100).toFixed(2)}</p>
+              <p className="text-lg font-semibold text-gray-900">
+                ${(price.unit_amount / 100).toFixed(2)}
+              </p>
             )}
             <Button>View details</Button>
           </CardContent>
