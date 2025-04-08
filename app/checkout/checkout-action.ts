@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export const checkoutAction = async (formData: FormData): Promise<void> => {
   const itemsJson = formData.get("items") as string;
   const items = JSON.parse(itemsJson);
-  const line_items = items.map((item: CartItem) => ({
+  const line_items = items?.map((item: CartItem) => ({
     price_data: {
       currency: "usd",
       product_data: { name: item.name },
@@ -20,8 +20,8 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
     payment_method_types: ["card"],
     line_items,
     mode: "payment",
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout`,
+    success_url: `http://localhost:3003/success`,
+    cancel_url: `http://localhost:3003/checkout`,
   });
 
   redirect(session.url!);
