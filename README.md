@@ -1,7 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Full-stack e-commerce website
+<img width="1326" alt="Screenshot 2025-04-08 at 10 13 30 AM" src="https://github.com/user-attachments/assets/3bc516ff-81be-435c-b208-e6dad353ce5c" />
+
+### Tech stack
+ Next JS 15 - for server side rendering and routing  
+ Tailwind CSS - for quick and efficient styling and responsiveness  
+ Typescript - for type safety across the codebase  
+ Zustand - for a lighweight state management solution  
+ Stripe - for payment processing  
+ 
+### Summary
+Through building this project, I've learned server side rendering and routing with Next JS. I learnd how to leverage Zustand to effeciently manage and update the state logic around adding, removing, clearing, and updating the cart item and the pricing information. That logic lives in one file *useCartStore* and the data and functions are distributed in each file as needed. There is also strong type safety to ensure correct inputs and outputs throughout the code. The styling is done with Tailwind CSS to ensure a smooth UI and responsiveness across devices. Lastly, I am leveraging Stripe as a payment processor for the checkout flow.
 
 ## Getting Started
-
 First, run the development server:
 
 ```bash
